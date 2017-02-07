@@ -1,0 +1,42 @@
+﻿
+@model ToDoList.Models.Category
+
+@{
+    ViewData["Title"] = "Category - Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Item Details</h2>
+<hr />
+
+<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Items)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+               
+    @foreach (var listItem in Model.Items)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => listItem.Description) 
+            </td>
+
+            <td></td>
+            <td>
+
+                @Html.ActionLink("Edit", "Edit", "Items", new { id = listItem.ItemId }) |
+                @Html.ActionLink("Details", "Details", "Items", new { id = listItem.ItemId }) |
+                @Html.ActionLink("Delete", "Delete", "Items", new { id = listItem.ItemId })
+            </td>
+        </tr>
+    }
+</table>
+
+    <p>@Html.ActionLink("Edit", "Edit", new { id = Model.CategoryId }) | @Html.ActionLink("Back to List", "Index")</p>

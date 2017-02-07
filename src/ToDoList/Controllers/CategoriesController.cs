@@ -7,30 +7,31 @@ using ToDoList.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
+
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ToDoList.Controllers
 {
-    public class ItemsController : Controller
+    public class CategoriesController : Controller
     {
         // GET: /<controller>/
         private ToDoListContext db = new ToDoListContext();
         public IActionResult Index()
         {
-            return View(db.Items.Include(items => items.Category).ToList());
+            return View(db.Categories.Include(categories => categories.Items).ToList());
         }
 
         // Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
+            ViewBag.ItemId = new SelectList(db.Items, "ItemId", "Description");
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Item item)
+        public ActionResult Create(Category category)
         {
-            db.Items.Add(item);
+            db.Categories.Add(category);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -38,22 +39,23 @@ namespace ToDoList.Controllers
         // Read
         public IActionResult Details(int id)
         {
-            var thisItem = db.Items.Include(items => items.Category).FirstOrDefault(items => items.ItemId == id);
-            return View(thisItem);
+            var thisCategory = db.Categories.Include(categories => categories.Items).FirstOrDefault(categories => categories.CategoryId == id);
+    
+            return View(thisCategory);
         }
 
         // Update
         public IActionResult Edit(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
-            return View(thisItem);
+            var thisCategory = db.Categories.FirstOrDefault(categories => categories.CategoryId == id);
+            ViewBag.ItemId = new SelectList(db.Items, "ItemId", "Description");
+            return View(thisCategory);
         }
 
         [HttpPost]
-        public ActionResult Edit(Item item)
+        public ActionResult Edit(Category category)
         {
-            db.Entry(item).State = EntityState.Modified;
+            db.Entry(category).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -62,15 +64,15 @@ namespace ToDoList.Controllers
 
         public IActionResult Delete(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
-            return View(thisItem);
+            var thisCategory = db.Categories.FirstOrDefault(categories => categories.CategoryId == id);
+            return View(thisCategory);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
-            db.Items.Remove(thisItem);
+            var thisCategory = db.Categories.FirstOrDefault(categories => categories.CategoryId == id);
+            db.Categories.Remove(thisCategory);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
