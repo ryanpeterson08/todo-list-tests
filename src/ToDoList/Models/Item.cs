@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -10,7 +11,6 @@ namespace ToDoList.Models
         [Key]
         public int ItemId { get; set; }
         public string Description { get; set; }
-        public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }
