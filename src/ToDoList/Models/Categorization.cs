@@ -11,6 +11,8 @@ namespace ToDoList.Models
         public int Id { get; set; } 
         public int CategoryId { get; set; }
         public int ItemId { get; set; }
+        public Item item { get; set; }
+        public Category category { get; set; }
         
     }
     

@@ -1,42 +1,41 @@
 ﻿
-@model ToDoList.Models.Category
+@model List<ToDoList.Models.Categorization>
 
 @{
     ViewData["Title"] = "Category - Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Item Details</h2>
+<h2>Category Details</h2>
 <hr />
+@foreach(var categorization in Model)
+{
+   
+    <p>categorization.category.Name</p>
 
-<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</p>
 
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Items)
-        </th>
-        <th></th>
-        <th></th>
-    </tr>
-
-               
-    @foreach (var listItem in Model.Items)
-    {
+    <table class="table">
+        <tr>
+            <th>
+                Items
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => listItem.Description) 
+                categorization.item.Description sock
             </td>
 
             <td></td>
             <td>
 
-                @Html.ActionLink("Edit", "Edit", "Items", new { id = listItem.ItemId }) |
-                @Html.ActionLink("Details", "Details", "Items", new { id = listItem.ItemId }) |
-                @Html.ActionLink("Delete", "Delete", "Items", new { id = listItem.ItemId })
+                @Html.ActionLink("Edit", "Edit", "Items", new { id = categorization.item.ItemId }) |
+                @Html.ActionLink("Details", "Details", "Items", new { id = categorization.item.ItemId }) |
+                @Html.ActionLink("Delete", "Delete", "Items", new { id = categorization.item.ItemId })
             </td>
         </tr>
     }
 </table>
 
-    <p>@Html.ActionLink("Edit", "Edit", new { id = Model.CategoryId }) | @Html.ActionLink("Back to List", "Index")</p>
+}
+ <p>@Html.ActionLink("Edit", "Edit", new { id = Model[0].CategoryId }) | @Html.ActionLink("Back to List", "Index")</p>

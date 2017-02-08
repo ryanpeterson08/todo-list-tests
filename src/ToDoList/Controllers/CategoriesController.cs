@@ -18,7 +18,7 @@ namespace ToDoList.Controllers
         private ToDoListContext db = new ToDoListContext();
         public IActionResult Index()
         {
-            return View(db.Categories.Include(categories => categories.Items).ToList());
+            return View(db.Categories.ToList());
         }
 
         // Create
@@ -39,9 +39,12 @@ namespace ToDoList.Controllers
         // Read
         public IActionResult Details(int id)
         {
-            var thisCategory = db.Categories.Include(categories => categories.Items).FirstOrDefault(categories => categories.CategoryId == id);
-    
-            return View(thisCategory);
+            var thisCategory = db.Categories.FirstOrDefault(category => category.CategoryId == id);
+
+            
+            var ItemList = db.Categorizations.Include(categorizations => categorizations.item).Where(categorizations=>categorizations.CategoryId == id).ToList();
+
+            return View(ItemList);
         }
 
         // Update

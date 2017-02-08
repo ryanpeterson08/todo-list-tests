@@ -6,11 +6,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ToDoList.Models
 {
     [Table("Items")]
+
     public class Item
     {
+        //public Item()
+        //{
+        //    this.Categories = new HashSet<Category>();
+        //}
         [Key]
         public int ItemId { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Category> Categories { get; set; }
+        public ICollection<Categorization> Categorizations { get; set; }
     }
 }
