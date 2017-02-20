@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿//using System.Collections.Generic;
+//using System.ComponentModel.DataAnnotations;
+//using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ToDoList.Models
-{
-    [Table("Categories")]
-    public class Category
-    {
-        //public Category()
-        //{
-        //    this.Items = new HashSet<Item>();
-        //}
+//namespace ToDoList.Models
+//{
+//    [Table("Categories")]
+//    public class Category
+//    {
+//        //public Category()
+//        //{
+//        //    this.Items = new HashSet<Item>();
+//        //}
 
-        [Key]
-        public int CategoryId { get; set; }
-        public string Name { get; set; }
-        public ICollection<Categorization> Categorizations { get; set; }
+//        [Key]
+//        public int CategoryId { get; set; }
+//        public string Name { get; set; }
+//        public ICollection<Categorization> Categorizations { get; set; }
 
-    }
-}
+//    }
+//}

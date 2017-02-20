@@ -13,48 +13,64 @@ namespace ToDoList.Controllers
 {
     public class ItemsController : Controller
     {
+        private IItemRepository itemRepo;
+
+        public ItemsController(IItemRepository thisRepo = null)
+        {
+            if(thisRepo == null)
+            {
+                this.itemRepo = new EFItemRepository();
+            }
+            else
+            {
+                this.itemRepo = new EFItemRepository();
+            }
+        }
         // GET: /<controller>/
-        private ToDoListContext db = new ToDoListContext();
+        
+
         public IActionResult Index()
         {
-            return View(db.Items.Include(items => items.Categorizations).ToList());
+            return View(itemRepo.Items.ToList());
         }
 
         // Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
+            //ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(Item item)
         {
-            db.Items.Add(item);
-            db.SaveChanges();
+            itemRepo.Save(item);
             return RedirectToAction("Index");
         }
 
         // Read
         public IActionResult Details(int id)
         {
-            var thisItem = db.Items.Include(items => items.Categorizations).FirstOrDefault(items => items.ItemId == id);
+            //var thisItem = db.Items.Include(items => items.Categorizations).FirstOrDefault(items => items.ItemId == id);
+            Item thisItem = itemRepo.Items.FirstOrDefault(x => x.ItemId == id);
             return View(thisItem);
         }
 
         // Update
         public IActionResult Edit(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
+            //var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
+            Item thisItem = itemRepo.Items.FirstOrDefault(x => x.ItemId == id);
+            //ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
             return View(thisItem);
         }
 
         [HttpPost]
         public ActionResult Edit(Item item)
         {
-            db.Entry(item).State = EntityState.Modified;
-            db.SaveChanges();
+            //db.Entry(item).State = EntityState.Modified;
+            //db.SaveChanges();
+            itemRepo.Edit(item);
             return RedirectToAction("Index");
         }
 
@@ -62,16 +78,16 @@ namespace ToDoList.Controllers
 
         public IActionResult Delete(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
+            //var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
+            Item thisItem = itemRepo.Items.FirstOrDefault(x => x.ItemId == id);
             return View(thisItem);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(items => items.ItemId == id);
-            db.Items.Remove(thisItem);
-            db.SaveChanges();
+            Item thisItem = itemRepo.Items.FirstOrDefault(items => items.ItemId == id);
+            itemRepo.Remove(thisItem);
             return RedirectToAction("Index");
         }
     }
